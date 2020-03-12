@@ -1,5 +1,5 @@
 {
-  "name": "node-red-contrib-ajv-node",
+  "name": "@node-red-tools/node-red-contrib-ajv",
   "version": "0.0.1",
   "description": "Node-red Node to validate a JSON Schema using the ajv library",
   "scripts": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nickcis/node-red-contrib-ajv-node.git"
+    "url": "git+https://github.com/node-red-tools/node-red-contrib-ajv.git"
   },
   "keywords": [
     "node",
@@ -25,10 +25,10 @@
   "author": "nickcis",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nickcis/node-red-contrib-ajv-node/issues"
+    "url": "https://github.com/node-red-tools/node-red-contrib-ajv/issues"
   },
-  "homepage": "https://github.com/nickcis/node-red-contrib-ajv-node#readme",
+  "homepage": "https://github.com/node-red-tools/node-red-contrib-ajv#readme",
   "dependencies": {
-    "ajv": "^5.2.0"
+    "ajv": "^6.12.0"
   }
 }

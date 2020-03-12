@@ -10,10 +10,12 @@ module.exports = function(RED) {
     try {
       validate = ajv.compile(JSON.parse(config.schema));
       this.status({});
-    } catch(e) {
-      validate = function() { return false; };
-      validate.errors = "Invalid schema";
-      this.status({fill:"red",shape:"ring",text:"invalid schema"});
+    } catch (e) {
+      validate = function() {
+        return false;
+      };
+      validate.errors = 'Invalid schema';
+      this.status({ fill: 'red', shape: 'ring', text: 'invalid schema' });
     }
 
     this.on('input', function(msg) {

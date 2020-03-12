@@ -1,88 +1,90 @@
 <script type="text/x-red" data-help-name="ajv">
-<p>AJV (Another JSON Validator) Node</p>
-<p>It will validate the <i>payload</i> according to the <i>Schema</i> setted.</p>
-<p>In addition, it sets the following properties of the message:
-  <ul>
-    <li><i>valid</i>: Boolean value to indicate if the payload is valid</li>
-    <li><i>errors</i>: Ajv errors</li>
-  </ul>
-</p>
-<p>In the first output valid messages are sent, while in the second one invalid ones.</p>
-<p><b>Note:</b> Message payload isn't modified</p>
+  <p>AJV (Another JSON Validator) Node</p>
+  <p>It will validate the <i>payload</i> according to the <i>Schema</i> setted.</p>
+  <p>In addition, it sets the following properties of the message:
+    <ul>
+      <li><i>valid</i>: Boolean value to indicate if the payload is valid</li>
+      <li><i>errors</i>: Ajv errors</li>
+    </ul>
+  </p>
+  <p>In the first output valid messages are sent, while in the second one invalid ones.</p>
+  <p><b>Note:</b> Message payload isn't modified</p>
 </script>
 
 <script type="text/x-red" data-template-name="ajv">
-    <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name </label>
-        <input type="text" id="node-input-name" placeholder="Name"/>
-    </div>
-    <div class="form-row" style="margin-bottom: 0px;>
-        <label for="node-input-schema"><i class="fa fa-wrench"></i> Schema </label>
-        <input type="hidden" id="node-input-schema" />
-    </div>
-    <div class="form-row node-text-editor-row">
-      <div style="height: 311px; min-height: 150px;" class="node-text-editor" id="node-input-schema-editor"></div>
-    </div>
-    <div class="form-tips"><span>See the Info tab for help.</span></div>
+  <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name </label>
+      <input type="text" id="node-input-name" placeholder="Name"/>
+  </div>
+  <div class="form-row" style="margin-bottom: 0px;>
+      <label for="node-input-schema"><i class="fa fa-wrench"></i> Schema </label>
+      <input type="hidden" id="node-input-schema" />
+  </div>
+  <div class="form-row node-text-editor-row">
+    <div style="height: 311px; min-height: 150px;" class="node-text-editor" id="node-input-schema-editor"></div>
+  </div>
+  <div class="form-tips"><span>See the Info tab for help.</span></div>
 </script>
 
 <script type="text/javascript">
-(function() {
-  RED.nodes.registerType("ajv", {
-    color: '#fff',
-    category: 'function',
-    defaults: {
-      name: {value: ''},
-      schema: {
-        value: '{}',
-        required: true,
-        validate: function(a) {
-          try {
-            JSON.parse(a);
-            return true
-          } catch(e) {
-            return false;
+  (function() {
+    RED.nodes.registerType('ajv', {
+      color: '#fff',
+      category: 'function',
+      defaults: {
+        name: { value: '' },
+        schema: {
+          value: '{}',
+          required: true,
+          validate: function(a) {
+            try {
+              JSON.parse(a);
+              return true;
+            } catch (e) {
+              return false;
+            }
           }
         }
-      }
-    },
-    inputs: 1,
-    outputs: 2,
-    outputLabels: ['valid', 'invalid'],
-    icon: 'ajv.png',
-    label: function() {
-      return this.name || 'ajv';
-    },
-    oneditprepare: function() {
-      var that = this;
-      this.editor = RED.editor.createEditor({
-        id: 'node-input-schema-editor',
-        mode: 'ace/mode/json',
-        value: $('#node-input-schema').val()
-      });
+      },
+      inputs: 1,
+      outputs: 2,
+      outputLabels: ['valid', 'invalid'],
+      icon: 'ajv.png',
+      label: function() {
+        return this.name || 'ajv';
+      },
+      oneditprepare: function() {
+        var that = this;
+        this.editor = RED.editor.createEditor({
+          id: 'node-input-schema-editor',
+          mode: 'ace/mode/json',
+          value: $('#node-input-schema').val()
+        });
 
-      this.editor.focus();
-    },
-    oneditsave: function() {
-      $('#node-input-schema').val(this.editor.getValue());
-      this.editor.destroy();
-      delete this.editor;
-    },
-    oneditcancel: function() {
-      this.editor.destroy();
-      delete this.editor;
-    },
-    oneditresize: function(size) {
-      var rows = $("#dialog-form>div:not(.node-text-editor-row)");
-      var height = $("#dialog-form").height();
-      for (var i=0; i<rows.size(); i++) {
-        height -= $(rows[i]).outerHeight(true);
+        this.editor.focus();
+      },
+      oneditsave: function() {
+        $('#node-input-schema').val(this.editor.getValue());
+        this.editor.destroy();
+        delete this.editor;
+      },
+      oneditcancel: function() {
+        this.editor.destroy();
+        delete this.editor;
+      },
+      oneditresize: function(size) {
+        var rows = $('#dialog-form>div:not(.node-text-editor-row)');
+        var height = $('#dialog-form').height();
+        for (var i = 0; i < rows.size(); i++) {
+          height -= $(rows[i]).outerHeight(true);
+        }
+        var editorRow = $('#dialog-form>div.node-text-editor-row');
+        height -=
+          parseInt(editorRow.css('marginTop')) +
+          parseInt(editorRow.css('marginBottom'));
+        $('.node-text-editor').css('height', height + 'px');
+        this.editor.resize();
       }
-      var editorRow = $("#dialog-form>div.node-text-editor-row");
-      height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
-      $(".node-text-editor").css("height",height+"px");
-      this.editor.resize();
-    }
-  });
-})();
+    });
+  })();
 </script>
