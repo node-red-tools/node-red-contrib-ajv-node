@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/node-red-tools/node-red-contrib-ajv#readme",
   "dependencies": {
-    "ajv": "^6.12.0"
+    "ajv": "^6.12.5"
   }
 }
